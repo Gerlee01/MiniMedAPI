@@ -1,21 +1,30 @@
 package com.minimed.MiniMedAPI.data.user;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.minimed.MiniMedAPI.entity.user.User;
+import com.minimed.MiniMedAPI.service.exception.ResourceNotFoundException;
+import com.minimed.MiniMedAPI.service.security.CurrentUser;
+import com.minimed.MiniMedAPI.service.security.UserPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/user")
 public class UserController {
-    private final UserService userService;
+    private final UserService service;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
     @PostMapping("/name")
     public String getName(@RequestBody String patientUuid) {
-        return userService.getName(patientUuid);
+        return service.getName(patientUuid);
+    }
+
+    @GetMapping("/me")
+    public User getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+        Optional<User> user = service.findByUsername(currentUser.getUsername());
+        return user.orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
     }
 }
