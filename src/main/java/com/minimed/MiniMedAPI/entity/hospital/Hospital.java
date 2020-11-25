@@ -18,6 +18,6 @@ import java.time.LocalDateTime;
 @Data
 public class Hospital extends BaseModel {
     private String name; //Эмнэлгийн нэр
-    private String addressUuid; //гэрийн хаяг
+    private String addressUuid; //Эмнэлгийн хаяг
     private LocalDateTime created; //Эмнэлгийг бүртгэж авсан огноо
 }

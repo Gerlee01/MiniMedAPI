@@ -29,8 +29,12 @@ public class Prescription extends BaseModel {
 
     @NotNull
     private Long hospitalID; //Эмнэлгийн дугаар
+    private String formam1bUuid;
     private String pillName; //Эмийн нэр
-    private String guide; //Эм хэрэглэх заавар
+
+    private String rp;// тайлбар эмийн нэрс болон хэрэглэх заавар г.м
+    private String note;// тайлбар эмийн нэрс болон хэрэглэх заавар г.м
+
     private String doctorFullName; //Жор бичсэн эмчийн бүтэн нэр
     private String doctorWorkPlace; //Жор бичсэн эмчийн ажлын байрны нэршил
     private String doctorRegNum; //Жор бичсэн эмчийн регистрийн дугаар
@@ -44,3 +48,5 @@ public class Prescription extends BaseModel {
         public String getType() { return type; }
     }
 }
+
+

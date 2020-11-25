@@ -19,21 +19,30 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 public class Payment extends BaseModel {
-
     @NotNull
     private Long patientID; //Өвчтөний дугаар
 
     @NotNull
     private Long hospitalID; //Эмнэлгийн дугаар
 
-    private int price; //Төлбөр
-    private Type type; //Төлбөрийн төрөл
+    private String mainUuid; //
+
+    private double mainPrice;// нийт төлбөр
+    private double price; // төлөх төлбөр
+    private double discount; // хөнгөлөлт
+    private Status discountStatus;// хөнгөлөлтийн төрөл
     private LocalDateTime created; //Төлбөр хийгдсэн огноо
 
-    public enum Type {
-        person("Өөрөө"), clinic("Тасгийн хөнгөлөлт"), diagnosis("Оношийн хөнгөлөлт");
-        private String type;
-        Type(String type) { this.type = type; }
-        public String getType() { return type; }
+    public enum Status {
+        insuranceDiscount("даатгал"), organizationDiscount("байгууллага"), outPatientDiscount("Тасгийн хөнгөлөлт"), emergencyDiscount("яаралтай хөнгөлөлт");
+        private String status;
+
+        Status(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
     }
 }
