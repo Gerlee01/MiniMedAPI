@@ -22,7 +22,6 @@ import javax.validation.Valid;
 @RequestMapping("/api/auth")
 @Log4j
 public class AuthController {
-    //би аймр хайртай шүү
     private final JwtTokenProvider tokenProvider;
     private final AuthenticationManager  authenticationManager;
 

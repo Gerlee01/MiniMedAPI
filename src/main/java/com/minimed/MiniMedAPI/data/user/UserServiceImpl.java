@@ -1,11 +1,10 @@
 package com.minimed.MiniMedAPI.data.user;
 
-import com.minimed.MiniMedAPI.data.patient.PatientService;
-import com.minimed.MiniMedAPI.entity.patient.Patient;
 import com.minimed.MiniMedAPI.entity.user.User;
 import com.minimed.MiniMedAPI.service.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +19,7 @@ public class UserServiceImpl implements UserService {
     public String getName(String patientUuid) {
         Optional<User> user = userRepository.findByUuid(patientUuid);
 
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return user.get().getParentUuid();
         }
 
@@ -30,5 +29,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }
