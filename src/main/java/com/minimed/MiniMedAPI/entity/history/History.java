@@ -21,6 +21,7 @@ import java.time.LocalTime;
 @Entity
 @Data
 public class History extends BaseModel {
+    private String historyUuid; //
     @NotNull
     private Long patientID; //Өвчтөний дугаар
 
