@@ -4,6 +4,7 @@ import com.minimed.MiniMedAPI.entity.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -19,30 +20,40 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 public class Payment extends BaseModel {
-    @NotNull
-    private Long patientID; //Өвчтөний дугаар
+    private String mainUuid; //байж болох утгууд: TimeTableUUID, AM1BUUID, AnalysisUUID, PacsUUID
 
-    @NotNull
-    private Long hospitalID; //Эмнэлгийн дугаар
-
-    private String mainUuid; //
-
-    private double mainPrice;// нийт төлбөр
+    @Column(columnDefinition = "double default 0")
     private double price; // төлөх төлбөр
-    private double discount; // хөнгөлөлт
-    private Status discountStatus;// хөнгөлөлтийн төрөл
+    @Column(columnDefinition = "double default 0")
+    private double discountPack; // Багцын хөнгөлөлт // 1.
+    @Column(columnDefinition = "double default 0")
+    private double discountVip; // Эрхийн хөнгөлөлт // 2.
+    @Column(columnDefinition = "double default 0")
+    private double discountEmergency; // Яаралтай цагийн төрлийн хөнгөлөлт // 3.
+    @Column(columnDefinition = "double default 0")
+    private double discountOutPatient; // Тасгийн хөнгөлөлт // 4.
+    @Column(columnDefinition = "double default 0")
+    private double discountDiagnosis; // A B C Z оношийн хөнгөлөлт // 5.
+    @Column(columnDefinition = "double default 0")
+    private double discountInsurance; // Даатгалын хөнгөлөлт // 6.
+    @Column(columnDefinition = "double default 0")
+    private double discountRepeat; // Давтан үзлэгийн хөнгөлөлт // 7.
+    @Column(columnDefinition = "double default 0")
+    private double discountFamily; // Гэр бүлийн хөнгөлөлт // 8.
+    @Column(columnDefinition = "double default 0")
+    private double discountPercent; // Хувьчилсан буюу гараараа хөнгөлсөн 9.
+    @Column(columnDefinition = "double default 0")
+    private double mainPrice; // Үндсэн дүн буюу хөнгөлөгдөөгүй дүн
+
     private LocalDateTime created; //Төлбөр хийгдсэн огноо
 
-    public enum Status {
-        none("Хөнгөлөлт эдлээгүй") ,insuranceDiscount("даатгал"), organizationDiscount("байгууллага"), outPatientDiscount("Тасгийн хөнгөлөлт"), emergencyDiscount("яаралтай хөнгөлөлт");
-        private String status;
+    public double getMainDiscount() {
+        return discountDiagnosis + discountVip + discountPack + discountEmergency + discountOutPatient + discountRepeat
+                + discountFamily + discountPercent + discountInsurance;
+    }
 
-        Status(String status) {
-            this.status = status;
-        }
-
-        public String getStatus() {
-            return status;
-        }
+    public double getTotalDiscount() {
+        return discountDiagnosis + discountVip + discountPack + discountEmergency + discountOutPatient + discountRepeat
+                + discountFamily + discountPercent;
     }
 }

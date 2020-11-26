@@ -3,9 +3,12 @@ package com.minimed.MiniMedAPI.entity.history;
 import com.minimed.MiniMedAPI.entity.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,7 +24,15 @@ import java.time.LocalTime;
 @Entity
 @Data
 public class History extends BaseModel {
-    private String historyUuid; //
+    @NotNull
+    @NotEmpty
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(unique = true)
+    private String uuid;//Analysis, Pacs, Am1b-n uuid
+    @NotNull
+    private String timeTableUuid;//TimeTable uuid
+
     @NotNull
     private Long patientID; //Өвчтөний дугаар
 
@@ -46,14 +57,26 @@ public class History extends BaseModel {
     public enum Status {
         active("Ирсэн"), inactive("Ирээгүй");
         private String status;
-        Status(String status) { this.status = status; }
-        public String getStatus() { return status; }
+
+        Status(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
     }
 
     public enum Type {
         ambulatory("Үзлэг"), analysis("Шинжилгээ"), pacs("Оношилгоо");
         private String type;
-        Type(String type) { this.type = type; }
-        public String getType() { return type; }
+
+        Type(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
     }
 }

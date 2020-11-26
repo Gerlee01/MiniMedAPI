@@ -46,7 +46,6 @@ public class Patient extends BaseModel {
     @Column(columnDefinition = "TEXT")
     private String mail; //Имэйл хаяг
 
-    @Column(columnDefinition = "int default 0")
-    private int phone; //Гар утасны дугаар
+    private String phone; //Гар утасны дугаар
     private LocalDateTime created; //Өвчтөнийг бүртгэж авсан огноо
 }

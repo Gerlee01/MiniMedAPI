@@ -6,7 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -19,7 +22,7 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class Address extends BaseModel   {
+public class Address extends BaseModel {
     @NotNull
     @NotEmpty
     @GeneratedValue(generator = "system-uuid")
@@ -37,5 +40,7 @@ public class Address extends BaseModel   {
     private String block;//Хороолол/гудамж
     private String house;//Байр/хашаа
     private String number;//Тоот
+
+    private String temp;//бааз хөрвүүлэхдээ ашигласан
 }
 
