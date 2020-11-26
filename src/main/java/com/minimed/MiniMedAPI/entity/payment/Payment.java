@@ -34,7 +34,7 @@ public class Payment extends BaseModel {
     private LocalDateTime created; //Төлбөр хийгдсэн огноо
 
     public enum Status {
-        insuranceDiscount("даатгал"), organizationDiscount("байгууллага"), outPatientDiscount("Тасгийн хөнгөлөлт"), emergencyDiscount("яаралтай хөнгөлөлт");
+        none("Хөнгөлөлт эдлээгүй") ,insuranceDiscount("даатгал"), organizationDiscount("байгууллага"), outPatientDiscount("Тасгийн хөнгөлөлт"), emergencyDiscount("яаралтай хөнгөлөлт");
         private String status;
 
         Status(String status) {

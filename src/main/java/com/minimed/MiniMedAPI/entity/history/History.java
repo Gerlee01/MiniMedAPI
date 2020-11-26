@@ -36,7 +36,7 @@ public class History extends BaseModel {
     @Column(columnDefinition = "int default 0")
     private int targetNumber; //Авсан дугаар
 
-    @Column(columnDefinition = "LONG TEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String pdf; //Үзлэгийн дэлгэрэнгүй мэдээлэлтэй pdf файл
 
     private Status status; //Төлөв
