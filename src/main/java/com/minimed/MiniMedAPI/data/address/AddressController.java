@@ -1,5 +1,6 @@
 package com.minimed.MiniMedAPI.data.address;
 
+import com.minimed.MiniMedAPI.entity.address.Address;
 import com.minimed.MiniMedAPI.service.repository.address.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/address")
 public class AddressController {
-    private final AddressRepository addressRepository;
+    private final AddressService addressService;
 
     @Autowired
-    public AddressController(AddressRepository addressRepository) {
-        this.addressRepository = addressRepository;
+    public AddressController(AddressService addressService) {
+        this.addressService = addressService;
     }
 
-    @GetMapping(path = "/haha/{block}")
-    private String get(@PathVariable("block") String block) {
-        return String.valueOf(addressRepository.findFirstByBlock(block).getId());
+    @GetMapping(path = "/{uuid}")
+    private Address findByUuid(@PathVariable("uuid") String uuid) {
+        return addressService.findByUuid(uuid);
     }
 }

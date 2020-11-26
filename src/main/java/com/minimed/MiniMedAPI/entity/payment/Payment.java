@@ -46,14 +46,4 @@ public class Payment extends BaseModel {
     private double mainPrice; // Үндсэн дүн буюу хөнгөлөгдөөгүй дүн
 
     private LocalDateTime created; //Төлбөр хийгдсэн огноо
-
-    public double getMainDiscount() {
-        return discountDiagnosis + discountVip + discountPack + discountEmergency + discountOutPatient + discountRepeat
-                + discountFamily + discountPercent + discountInsurance;
-    }
-
-    public double getTotalDiscount() {
-        return discountDiagnosis + discountVip + discountPack + discountEmergency + discountOutPatient + discountRepeat
-                + discountFamily + discountPercent;
-    }
 }

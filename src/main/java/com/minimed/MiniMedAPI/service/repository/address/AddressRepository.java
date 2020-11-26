@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AddressRepository extends BaseRepository<Address> {
-    Address findFirstByBlock(String block);
+    Address findByUuid(String uuid);
 }

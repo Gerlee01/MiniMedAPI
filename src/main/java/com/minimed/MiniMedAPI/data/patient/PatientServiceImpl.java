@@ -17,13 +17,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public String getName(String patientUuid) {
+    public Patient getPatient(String patientUuid) {
         Optional<Patient> patient = patientRepository.findByUuid(patientUuid);
+        return patient.orElse(null);
 
-        if(patient.isPresent()){
-            return patient.get().getFirstName();
-        }
-
-        return "Бүртгэл олдсонгүй.";
     }
 }
