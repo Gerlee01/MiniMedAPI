@@ -4,6 +4,7 @@ import com.minimed.MiniMedAPI.entity.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -28,8 +29,36 @@ public class Prescription extends BaseModel {
     private String pillName; //Эмийн нэр
     private String diagnosis;//Онош
 
-    private String rp;// тайлбар эмийн нэрс болон хэрэглэх заавар г.м
-    private String note;// тайлбар эмийн нэрс болон хэрэглэх заавар г.м
+    @Column(columnDefinition = "TEXT")
+    private String rp;// тайлбар
+    @Column(columnDefinition = "TEXT")
+    private String note;// тайлбар
+    @Column(columnDefinition = "TEXT")
+    private String parmokokinetik; // Фармакокинетик үйлдэл
+    @Column(columnDefinition = "TEXT")
+    private String parmakodinamik; // Фармакодинамик үйлдэл
+    @Column(columnDefinition = "TEXT")
+    private String arga; // Хэрэглэх арга
+    @Column(columnDefinition = "TEXT")
+    private String usedtun;
+    @Column(columnDefinition = "TEXT")
+    private String usedtunMax;//Тун хэтэрсэн үед илрэх шинж, авах арга хэмжээ
+    @Column(columnDefinition = "TEXT")
+    private String nuloo; // Гаж нөлөө
+    @Column(columnDefinition = "TEXT")
+    private String tseerlelt; // Цээрлэлт
+    @Column(columnDefinition = "TEXT")
+    private String nemelt;  // Нэмэлт мэдлэг
+    @Column(columnDefinition = "TEXT")
+    private String uilchlel;  // Үйлчлэл  Харилцан үйлчилгээ
+    @Column(columnDefinition = "TEXT")
+    private String zaalt;  // Хэрэглэх заалт
+    @Column(columnDefinition = "TEXT")
+    private String pregnantZaalt;//Жирэмсэн ба хөхүүл үеийн хэрэглээ
+    @Column(columnDefinition = "TEXT")
+    private String olgoh;  // Олгох нөхцөл
+    @Column(columnDefinition = "TEXT")
+    private String hadgalah;  // Хадгалах нөхцөл
 
     private String doctorFullName; //Жор бичсэн эмчийн бүтэн нэр
     private String doctorWorkPlace; //Жор бичсэн эмчийн ажлын байрны нэршил
