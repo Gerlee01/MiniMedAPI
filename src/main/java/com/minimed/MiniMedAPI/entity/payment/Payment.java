@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 public class Payment extends BaseModel {
-    private String mainUuid; //байж болох утгууд: TimeTableUUID, AM1BUUID, AnalysisUUID, PacsUUID
+    private String mainUuid; //байж болох утгууд: TimeTableUUID
 
     @Column(columnDefinition = "double default 0")
     private double price; // төлөх төлбөр
