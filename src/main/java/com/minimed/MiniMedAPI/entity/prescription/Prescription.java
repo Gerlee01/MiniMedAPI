@@ -78,6 +78,15 @@ public class Prescription extends BaseModel {
             return type;
         }
     }
+
+    public int getTypeIndex(){
+        switch (this.type){
+            case normal: return 0;
+            case setgets: return 1;
+            case mansuuruulah: return 2;
+            default: return 3;
+        }
+    }
 }
 
 

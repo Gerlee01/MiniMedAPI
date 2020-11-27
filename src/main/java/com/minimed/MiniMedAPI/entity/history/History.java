@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static com.minimed.MiniMedAPI.entity.history.History.Status.active;
+
 /**
  * @author Б. Гэрэлцэцэг
  * @since 2020.11.02
@@ -77,6 +79,23 @@ public class History extends BaseModel {
 
         public String getType() {
             return type;
+        }
+    }
+
+    public int getStatusIndex(){
+        switch (this.status){
+            case active : return 0;
+            case inactive : return 1;
+            default: return 2;
+        }
+    }
+
+    public int getTypeIndex(){
+        switch (this.type){
+            case ambulatory : return 0;
+            case analysis : return 1;
+            case pacs : return 2;
+            default: return 3;
         }
     }
 }

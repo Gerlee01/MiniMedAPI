@@ -1,17 +1,17 @@
 package com.minimed.MiniMedAPI.model;
 
-import com.minimed.MiniMedAPI.entity.history.History;
+import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
+@Data
 public class HistoryModel {
     private Long id;
     private LocalDateTime targetDate; //Цаг авсан өдөр
-    private LocalTime targetTime; //Авсан цаг
+    private LocalDateTime targetTime; //Авсан цаг
     private int targetNumber; //Авсан дугаар
     private String pdf; //Үзлэгийн дэлгэрэнгүй мэдээлэлтэй pdf файл
-    private History.Status status; //Төлөв
-    private History.Type type; //Төрөл
+    private int status; //Төлөв
+    private int type; //Төрөл
     private LocalDateTime created; //Цаг өгөгдсөн огноо
 }

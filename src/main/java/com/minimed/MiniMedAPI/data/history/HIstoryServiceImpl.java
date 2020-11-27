@@ -5,7 +5,6 @@ import com.minimed.MiniMedAPI.service.repository.history.HistoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,5 +20,15 @@ public class HIstoryServiceImpl implements HistoryService {
         return historyRepository.findAllByPatientID(patientID).stream()
                 .filter(f -> f.getPatientID().equals(patientID)).map(History::getTimeTableUuid)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<History> findAllByPatientIdAndType(Long patientID, History.Type type) {
+        return historyRepository.findAllByPatientIDAndType(patientID, type);
+    }
+
+    @Override
+    public List<History> findALLByPatientId(Long patientID){
+        return historyRepository.findAllByPatientID(patientID);
     }
 }
