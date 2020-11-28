@@ -12,4 +12,6 @@ public interface UserRepository extends BaseRepository<User> {
     Optional<User> findByUuid(String id);
 
     List<User> findAll();
+
+    Optional<User> findFirstByUsername(String username);
 }

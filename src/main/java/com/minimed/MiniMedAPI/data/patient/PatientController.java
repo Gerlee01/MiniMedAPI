@@ -7,8 +7,8 @@ import com.minimed.MiniMedAPI.entity.patient.Patient;
 import com.minimed.MiniMedAPI.entity.user.User;
 import com.minimed.MiniMedAPI.model.PatientModel;
 import com.minimed.MiniMedAPI.service.security.CurrentUser;
-import com.minimed.MiniMedAPI.service.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,15 +30,15 @@ public class PatientController {
     }
 
     @GetMapping("/getPatient")
-    public PatientModel getPatient(@CurrentUser UserPrincipal currentUser) {
+    public PatientModel getPatient(@CurrentUser UserDetails currentUser) {
         Optional<User> user = userService.findByUsername(currentUser.getUsername());
-        if(user.isEmpty()) return null;
+        if (user.isEmpty()) return null;
 
         Patient patient = patientService.getPatient(user.get().getParentUuid());
-        if(patient== null) return null;
+        if (patient == null) return null;
 
         Address address = addressService.findByUuid(patient.getAddressUuid());
-        if(address== null) return null;
+        if (address == null) return null;
 
         return PatientModel.builder()
                 .id(patient.getId())

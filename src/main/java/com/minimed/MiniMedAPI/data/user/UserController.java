@@ -3,8 +3,8 @@ package com.minimed.MiniMedAPI.data.user;
 import com.minimed.MiniMedAPI.entity.user.User;
 import com.minimed.MiniMedAPI.service.exception.ResourceNotFoundException;
 import com.minimed.MiniMedAPI.service.security.CurrentUser;
-import com.minimed.MiniMedAPI.service.security.UserPrincipal;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public User getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+    public User getCurrentUser(@CurrentUser UserDetails currentUser) {
         Optional<User> user = service.findByUsername(currentUser.getUsername());
         return user.orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
     }

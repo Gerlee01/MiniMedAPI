@@ -7,7 +7,7 @@ import com.minimed.MiniMedAPI.entity.payment.Payment;
 import com.minimed.MiniMedAPI.entity.user.User;
 import com.minimed.MiniMedAPI.model.ChartPaymentModel;
 import com.minimed.MiniMedAPI.service.security.CurrentUser;
-import com.minimed.MiniMedAPI.service.security.UserPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +29,7 @@ public class PaymentController {
     }
 
     @GetMapping("/all")
-    public List<Payment> findAll(@CurrentUser UserPrincipal currentUser) {
+    public List<Payment> findAll(@CurrentUser UserDetails currentUser) {
         Optional<User> user = userService.findByUsername(currentUser.getUsername());
         if (user.isEmpty()) return null;
         Patient patient = patientService.getPatient(user.get().getParentUuid());
@@ -38,7 +38,7 @@ public class PaymentController {
     }
 
     @GetMapping("/chart")
-    public ChartPaymentModel findChartValue(@CurrentUser UserPrincipal currentUser) {
+    public ChartPaymentModel findChartValue(@CurrentUser UserDetails currentUser) {
         Optional<User> user = userService.findByUsername(currentUser.getUsername());
         if (user.isEmpty()) return null;
         Patient patient = patientService.getPatient(user.get().getParentUuid());

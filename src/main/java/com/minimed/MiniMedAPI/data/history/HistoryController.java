@@ -8,9 +8,12 @@ import com.minimed.MiniMedAPI.entity.user.User;
 import com.minimed.MiniMedAPI.model.ChartHistoryModel;
 import com.minimed.MiniMedAPI.model.HistoryModel;
 import com.minimed.MiniMedAPI.service.security.CurrentUser;
-import com.minimed.MiniMedAPI.service.security.UserPrincipal;
 import lombok.extern.log4j.Log4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,7 +38,7 @@ public class HistoryController {
     }
 
     @GetMapping("/all/{type}")
-    public List<HistoryModel> findAll(@PathVariable("type") String type, @CurrentUser UserPrincipal currentUser) {
+    public List<HistoryModel> findAll(@PathVariable("type") String type, @CurrentUser UserDetails currentUser) {
         Optional<User> user = userService.findByUsername(currentUser.getUsername());
         if (user.isEmpty()) return new ArrayList<>();
         Patient patient = patientService.getPatient(user.get().getParentUuid());
@@ -61,7 +64,7 @@ public class HistoryController {
     }
 
     @GetMapping("/chart/{type}")
-    public ChartHistoryModel findChartValue(@PathVariable("type") String type, @CurrentUser UserPrincipal currentUser){
+    public ChartHistoryModel findChartValue(@PathVariable("type") String type, @CurrentUser UserDetails currentUser) {
         Optional<User> user = userService.findByUsername(currentUser.getUsername());
         if (user.isEmpty()) return null;
         Patient patient = patientService.getPatient(user.get().getParentUuid());
@@ -71,11 +74,11 @@ public class HistoryController {
         int irsen = 0;
         int ireegvi = 0;
         for (History f : histories) {
-            if(f.getStatus().equals(History.Status.active)) irsen++;
+            if (f.getStatus().equals(History.Status.active)) irsen++;
             else ireegvi++;
         }
         double size = histories.size();
         double onepre = 100 / size;
-        return ChartHistoryModel.builder().irsen(irsen*onepre).ireegvi(ireegvi*onepre).build();
+        return ChartHistoryModel.builder().irsen(irsen * onepre).ireegvi(ireegvi * onepre).build();
     }
 }

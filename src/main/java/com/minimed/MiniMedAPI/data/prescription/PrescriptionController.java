@@ -7,7 +7,7 @@ import com.minimed.MiniMedAPI.entity.prescription.Prescription;
 import com.minimed.MiniMedAPI.entity.user.User;
 import com.minimed.MiniMedAPI.model.PrescriptionModel;
 import com.minimed.MiniMedAPI.service.security.CurrentUser;
-import com.minimed.MiniMedAPI.service.security.UserPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +30,7 @@ public class PrescriptionController {
     }
 
     @GetMapping("/all")
-    public List<PrescriptionModel> findAll(@CurrentUser UserPrincipal currentUser) {
+    public List<PrescriptionModel> findAll(@CurrentUser UserDetails currentUser) {
         Optional<User> user = userService.findByUsername(currentUser.getUsername());
         if (user.isEmpty()) return new ArrayList<>();
         Patient patient = patientService.getPatient(user.get().getParentUuid());
