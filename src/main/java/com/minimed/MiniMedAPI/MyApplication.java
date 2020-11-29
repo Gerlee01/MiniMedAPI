@@ -1,7 +1,5 @@
 package com.minimed.MiniMedAPI;
 
-import com.minimed.MiniMedAPI.service.repository.address.AddressRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -12,20 +10,20 @@ import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @EntityScan(basePackageClasses = {
-		MyApplication.class,
-		Jsr310JpaConverters.class
+        MyApplication.class,
+        Jsr310JpaConverters.class
 })
 @SpringBootApplication
 @EnableScheduling
 public class MyApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MyApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MyApplication.class, args);
+    }
 
-	@PostConstruct
-	void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("Asia/Ulaanbaatar"));
-	}
+    @PostConstruct
+    void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Ulaanbaatar"));
+    }
 
 }

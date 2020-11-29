@@ -9,12 +9,15 @@ import com.minimed.MiniMedAPI.model.ChartHistoryModel;
 import com.minimed.MiniMedAPI.model.HistoryModel;
 import com.minimed.MiniMedAPI.service.security.CurrentUser;
 import lombok.extern.log4j.Log4j;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -80,5 +83,10 @@ public class HistoryController {
         double size = histories.size();
         double onepre = 100 / size;
         return ChartHistoryModel.builder().irsen(irsen * onepre).ireegvi(ireegvi * onepre).build();
+    }
+
+    @GetMapping("/pdf/id/{id}")
+    public ResponseEntity<InputStreamResource> findPdfById(@PathVariable Long id) {
+        return Optional.ofNullable(historyService.findPdfById(id)).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 }
