@@ -34,6 +34,12 @@ public class HistoryServiceImpl implements HistoryService {
         return historyRepository.findAllByPatientIDAndType(patientID, type);
     }
 
+    /**
+     * PDF id-аар дуудах
+     *
+     * @param id History id
+     * @return Resource
+     */
     @Override
     public InputStreamResource findPdfById(Long id) {
         InputStream inputStream = null;
