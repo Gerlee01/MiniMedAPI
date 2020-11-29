@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 
 @Service
 @Log4j
-public class HIstoryServiceImpl implements HistoryService {
+public class HistoryServiceImpl implements HistoryService {
     private final HistoryRepository historyRepository;
 
-    public HIstoryServiceImpl(HistoryRepository historyRepository) {
+    public HistoryServiceImpl(HistoryRepository historyRepository) {
         this.historyRepository = historyRepository;
     }
 
@@ -36,10 +36,9 @@ public class HIstoryServiceImpl implements HistoryService {
 
     @Override
     public InputStreamResource findPdfById(Long id) {
-        File file = new File("D:/minimed/" + id + ".pdf");
         InputStream inputStream = null;
         try {
-            inputStream = new FileInputStream(file);
+            inputStream = new FileInputStream(new File("D:/minimed/" + id + ".pdf"));
         } catch (FileNotFoundException e) {
             log.error(e);
         }
