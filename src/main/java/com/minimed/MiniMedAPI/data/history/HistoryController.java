@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -40,13 +39,15 @@ public class HistoryController {
         this.userService = userService;
     }
 
-    @GetMapping("/all/{type}")
-    public List<HistoryModel> findAll(@PathVariable("type") String type, @CurrentUser UserDetails currentUser) {
+    @GetMapping("/all")
+    public List<HistoryModel> findAll(@CurrentUser UserDetails currentUser) {
         Optional<User> user = userService.findByUsername(currentUser.getUsername());
         if (user.isEmpty()) return new ArrayList<>();
+
         Patient patient = patientService.getPatient(user.get().getParentUuid());
         if (patient == null) return new ArrayList<>();
-        List<History> histories = historyService.findAllByPatientIdAndType(patient.getId(), History.Type.valueOf(type));
+
+        List<History> histories = historyService.findALLByPatientId(patient.getId());
         if (histories == null || histories.isEmpty()) return new ArrayList<>();
 
         List<HistoryModel> results = new ArrayList<>();
