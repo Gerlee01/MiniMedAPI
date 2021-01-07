@@ -1,6 +1,7 @@
 package com.minimed.MiniMedAPI.data.history;
 
 import com.minimed.MiniMedAPI.entity.history.History;
+import com.minimed.MiniMedAPI.model.FilterModel;
 import com.minimed.MiniMedAPI.service.repository.history.HistoryRepository;
 import lombok.extern.log4j.Log4j;
 import org.springframework.core.io.InputStreamResource;
@@ -10,6 +11,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,5 +57,20 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public List<History> findALLByPatientId(Long patientID) {
         return historyRepository.findAllByPatientID(patientID);
+    }
+
+    @Override
+    public List<History> findALLByPatientIdAndFilter(Long patientID, FilterModel filter) {
+        List<History.Type> typeList = new ArrayList<>();
+        for (String type : filter.getTypes()) {
+            typeList.add(History.Type.valueOf(type));
+        }
+        List<History.Status> statusList = new ArrayList<>();
+        for (String status : filter.getStatuses()) {
+            statusList.add(History.Status.valueOf(status));
+        }
+        return historyRepository.findAllByPatientIDAndTargetDateBetweenAndTypeInAndStatusIn(patientID,
+                LocalDateTime.parse(filter.getStartdate()).toLocalDate(), LocalDateTime.parse(filter.getEnddate()).toLocalDate(),
+                typeList, statusList);
     }
 }

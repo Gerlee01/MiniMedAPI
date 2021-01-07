@@ -6,16 +6,14 @@ import com.minimed.MiniMedAPI.entity.history.History;
 import com.minimed.MiniMedAPI.entity.patient.Patient;
 import com.minimed.MiniMedAPI.entity.user.User;
 import com.minimed.MiniMedAPI.model.ChartHistoryModel;
+import com.minimed.MiniMedAPI.model.FilterModel;
 import com.minimed.MiniMedAPI.model.HistoryModel;
 import com.minimed.MiniMedAPI.service.security.CurrentUser;
 import lombok.extern.log4j.Log4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,15 +37,19 @@ public class HistoryController {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
-    public List<HistoryModel> findAll(@CurrentUser UserDetails currentUser) {
+    @PostMapping("/all")
+    public List<HistoryModel> findAll( @RequestBody FilterModel filter, @CurrentUser UserDetails currentUser) {
+        log.info("ko");
         Optional<User> user = userService.findByUsername(currentUser.getUsername());
         if (user.isEmpty()) return new ArrayList<>();
 
         Patient patient = patientService.getPatient(user.get().getParentUuid());
         if (patient == null) return new ArrayList<>();
 
-        List<History> histories = historyService.findALLByPatientId(patient.getId());
+        List<History> histories;
+        if(filter == null) histories = historyService.findALLByPatientId(patient.getId());
+        else  histories = historyService.findALLByPatientIdAndFilter(patient.getId(), filter);
+
         if (histories == null || histories.isEmpty()) return new ArrayList<>();
 
         List<HistoryModel> results = new ArrayList<>();
