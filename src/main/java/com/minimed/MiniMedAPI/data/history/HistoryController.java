@@ -35,7 +35,7 @@ public class HistoryController {
         this.historyService = historyService;
         this.patientService = patientService;
         this.userService = userService;
-    }
+    } 
 
     @PostMapping("/all")
     public List<HistoryModel> findAll( @RequestBody FilterModel filter, @CurrentUser UserDetails currentUser) {
